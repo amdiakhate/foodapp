@@ -1,19 +1,17 @@
 <!--item-->
 <div>
     <figure>
-        <img src="{{photo.link}}" alt=""/>
+        <img width="100%;" src="{{photo.link}}" alt=""/>
         <!--<figcaption><a href="recipe.html"><i class="ico i-view"></i> <span>View recipe</span></a></figcaption>-->
     </figure>
     <div class="container">
 
         <div class="row">
-            <div class="one-half">
-                <span>  <i class="icon dislike icon-bin"></i></span>
-
+            <div class="col-50">
+                <button style="float: left" class="button button-positive icon ion-trash-a " on-touch="downvote(photo.id_photo)"></button>
             </div>
-            <div class="one-half">
-                <span> <i class="icon like icon-smile"></i>  </span>
-
+            <div class="col-50">
+                <button style="float:right;" class="button button-assertive icon ion-android-favorite" on-touch="upvote(photo.id_photo)"></button>
             </div>
 
         </div>

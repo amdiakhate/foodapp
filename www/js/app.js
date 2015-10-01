@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('foodstagramApp', ['ionic', 'starter.controllers', 'starter.services','ngResource','LocalStorageModule'])
+angular.module('foodstagramApp', ['ionic', 'starter.controllers', 'starter.services','ngResource','LocalStorageModule','ionicLazyLoad'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,8 +23,9 @@ angular.module('foodstagramApp', ['ionic', 'starter.controllers', 'starter.servi
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
+    $ionicConfigProvider.navBar.alignTitle('center')
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.

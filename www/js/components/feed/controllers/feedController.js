@@ -2,8 +2,9 @@
  * Created by Makhtar on 29/09/2015.
  */
 
-angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'localStorageService', function ($scope, Photos, localStorageService) {
+angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'localStorageService','$http', function ($scope, Photos, localStorageService,$http) {
 
+    var url = "http://foodstagram.lifeswift.fr/api";
     $scope.loading = true;
     $scope.searchText = '';
     $scope.page = 1;
@@ -45,6 +46,7 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
      */
     $scope.nextPhoto = function () {
         if ($scope.photos.length > 0) {
+            console.log('nextphoto')
             var photo = $scope.photos.shift();
             if (checkPhoto(photo)) {
                 $scope.photo = photo;
@@ -54,11 +56,6 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
         } else {
             $scope.loadMore();
         }
-    }
-
-    //Search by clicking on tags
-    $scope.updateSearch = function (tag) {
-        $scope.searchText = tag;
     }
 
     function checkPhoto(photo) {
@@ -80,6 +77,32 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
             }
         }
         return true;
+
+    }
+
+    //Upvoting
+    $scope.upvote = function (id_photo) {
+        console.log('upvoted',id_photo)
+        $http.post(url + '/photo/upvote', {
+            'id_photo': id_photo
+        }).then(
+            function (response) {
+                $scope.nextPhoto();
+            }
+        )
+
+    }
+
+    //Downovting
+    $scope.downvote = function (id_photo) {
+        console.log('downvoted',id_photo)
+        $http.post(url + '/photo/downvote', {
+            'id_photo': id_photo
+        }).then(
+            function (response) {
+                $scope.nextPhoto();
+            }
+        )
 
     }
 
