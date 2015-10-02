@@ -11,7 +11,6 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
   if (!localStorageService.get('photos')) {
     localStorageService.set('photos', []);
   }
-
   //This function loads the photos
   $scope.loadMore = function () {
 
@@ -19,7 +18,6 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
       //No photos at the beginning
       $scope.photos = [];
       if (data.length > 0) {
-        $ionicLoading.show({ template: 'Length '+ data.length, noBackdrop: true, duration: 1000 });
 
         for (var i = 0; i < data.length; i++) {
           $scope.photos.push(data[i]);
@@ -27,8 +25,6 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
         $scope.page++;
 
         var photo = $scope.photos.shift();
-        $ionicLoading.show({ template: 'Here !' + photo.link, noBackdrop: true, duration: 2000 });
-
         ////Everytime we show a new photo, we add it to the localStorage
         if (checkPhoto(photo)) {
           $scope.photo = [photo];
@@ -47,6 +43,9 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
    * This function loads the next photo
    */
   $scope.nextPhoto = function () {
+    if (!localStorageService.get('photos')) {
+      localStorageService.set('photos', []);
+    }
     if ($scope.photos.length > 0) {
       console.log('nextphoto')
       var photo = $scope.photos.shift();
