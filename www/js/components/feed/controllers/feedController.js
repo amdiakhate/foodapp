@@ -58,7 +58,7 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
   }
 
   function checkPhoto(photo) {
-    var storage = localStorageService.get('photos');
+    var storage = localStorageService.get('photos') || [];
     var id_photo = photo.id_photo;
     if (storage.length == 0) {
       var storedPhotos = [id_photo];
