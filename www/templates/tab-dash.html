@@ -2,12 +2,12 @@
   <ion-content class="padding"  lazy-scroll>
     <div class="card">
       <h3 class="text-center">Would you eat it ?</h3>
-      <td-cards>
-        <td-card ng-repeat="photo in photo"  on-swipe-left="downvote(photo.id_photo)" on-swipe-right="upvote(photo.id_photo)" class="card-{{$index}}">
-          <!--<photo-block photo=photo></photo-block>-->
+
+      <td-cards >
+        <td-card  ng-repeat="photo in photo"  on-swipe-left="downvote(photo.id_photo)" on-swipe-right="upvote(photo.id_photo)" class="card-{{$index}}">
           <div class="image" >
             <div class="no-text">NOPE</div>
-            <img ng-src="{{photo.link}}">
+            <img src="{{photo.link}}">
             <div class="yes-text">LIKE</div>
           </div>
         </td-card>

@@ -2,13 +2,10 @@
  * Created by Makhtar on 29/09/2015.
  */
 
-angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'localStorageService', '$http', function ($scope, Photos, localStorageService, $http) {
+angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'localStorageService', '$http','$ionicLoading', function ($scope, Photos, localStorageService, $http,$ionicLoading) {
 
   var url = "http://foodstagram.lifeswift.fr/api";
-  $scope.searchText = '';
   $scope.page = 1;
-  //No photos at the beginning
-  $scope.photos = [];
   //$scope.photo = null;
 
   if (!localStorageService.get('photos')) {
@@ -17,14 +14,20 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
 
   //This function loads the photos
   $scope.loadMore = function () {
+
     Photos.query({page: $scope.page}, function (data) {
+      //No photos at the beginning
+      $scope.photos = [];
       if (data.length > 0) {
+        $ionicLoading.show({ template: 'Length '+ data.length, noBackdrop: true, duration: 1000 });
+
         for (var i = 0; i < data.length; i++) {
           $scope.photos.push(data[i]);
         }
         $scope.page++;
 
         var photo = $scope.photos.shift();
+        $ionicLoading.show({ template: 'Here !' + photo.link, noBackdrop: true, duration: 2000 });
 
         ////Everytime we show a new photo, we add it to the localStorage
         if (checkPhoto(photo)) {

@@ -66,8 +66,7 @@ angular.module('foodstagramApp', ['ionic', 'starter.controllers', 'starter.servi
       }
     });
   })
-
-  .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  .config(  function ( $stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     $ionicConfigProvider.navBar.alignTitle('center')
     // Ionic uses AngularUI Router which uses the concept of states
