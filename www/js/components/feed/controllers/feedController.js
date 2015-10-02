@@ -2,15 +2,26 @@
  * Created by Makhtar on 29/09/2015.
  */
 
-angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'localStorageService', '$http','$ionicLoading', function ($scope, Photos, localStorageService, $http,$ionicLoading) {
+angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'localStorageService', '$http', '$ionicLoading', function ($scope, Photos, localStorageService, $http, $ionicLoading) {
 
-  var url = "http://foodstagram.lifeswift.fr/api";
+  var url = "http://localhost:8082/foodstagram/web/app_dev.php/api";
   $scope.page = 1;
   //$scope.photo = null;
 
   if (!localStorageService.get('photos')) {
     localStorageService.set('photos', []);
   }
+
+  //IF no user, we create a new one
+  if (!localStorageService.get('user')) {
+    $http.post(url + '/user/new', {}).then(
+      function (response) {
+        localStorageService.set('user', JSON.stringify(response));
+      }
+    )
+
+  }
+
   //This function loads the photos
   $scope.loadMore = function () {
 
