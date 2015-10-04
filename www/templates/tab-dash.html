@@ -4,11 +4,10 @@
       <h3 class="text-center">Would you eat it ?</h3>
 
       <td-cards>
-        <td-card ng-repeat="photo in photo" on-swipe-left="downvote(photo.id_photo)"
+        <td-card ng-repeat="photo in photo" on-destroy="ondestroy()" on-swipe-left="downvote(photo.id_photo)"
                  on-swipe-right="upvote(photo.id_photo)" class="card-{{$index}}">
           <div class="image">
             <div class="no-text">NOPE</div>
-            <span class="loading"> <img src="https://www.yugma.com/images/loading-animation-7.gif"/></span>
             <img ng-src="{{photo.link}}" imageonload>
             <div class="yes-text">LIKE</div>
           </div>
