@@ -6,6 +6,8 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('foodstagramApp', ['ionic', 'starter.controllers', 'starter.services', 'ngResource', 'LocalStorageModule', 'ionic.contrib.ui.tinderCards'], function ($httpProvider) {
+
+
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
         /**
          * The workhorse; converts an object to x-www-form-urlencoded serialization.
@@ -56,6 +58,7 @@ angular.module('foodstagramApp', ['ionic', 'starter.controllers', 'starter.servi
                     return config
                 },
                 response: function (response) {
+                    console.log('status', response.status);
                     $rootScope.$broadcast('loading:hide')
                     return response
                 }
@@ -147,4 +150,12 @@ angular.module('foodstagramApp', ['ionic', 'starter.controllers', 'starter.servi
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/tab/dash');
 
-    });
+
+    }
+
+
+)
+
+    //Constants
+    .constant('API_URL',"http://localhost/foodstagram/web/app_dev.php/api")
+;

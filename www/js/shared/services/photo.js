@@ -4,6 +4,6 @@
 
 
 angular.module('foodstagramApp')
-    .factory("Photos", function ($resource) {
-        return $resource('http://foodstagram.lifeswift.fr/api/photos/:page/:id_user', {page: '@page',id_user:'@id_user'});
+    .factory("Photos", function ($resource,API_URL) {
+        return $resource(API_URL + '/photos/:page/:id_user', {page: '@page',id_user:'@id_user'});
     });

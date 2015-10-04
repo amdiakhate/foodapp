@@ -1,19 +1,26 @@
 <ion-view view-title="Foodstagram" ng-controller="feedCtrl">
-  <ion-content class="padding" lazy-scroll>
-    <div class="card">
-      <h3 class="text-center">Would you eat it ?</h3>
+    <ion-content class="padding" lazy-scroll>
+        <div class="card">
+            <h3 class="text-center">Would you eat it ?</h3>
 
-      <td-cards>
-        <td-card ng-repeat="photo in photo" on-destroy="ondestroy()" on-swipe-left="downvote(photo.id_photo)"
-                 on-swipe-right="upvote(photo.id_photo)" class="card-{{$index}}">
-          <div class="image">
-            <div class="no-text">NOPE</div>
-            <img ng-src="{{photo.link}}" imageonload>
-            <div class="yes-text">LIKE</div>
-          </div>
-        </td-card>
-      </td-cards>
+            <td-cards>
+                <td-card ng-repeat="photo in photo" on-destroy="ondestroy()" on-swipe-left="downvote(photo.id_photo)"
+                         on-swipe-right="upvote(photo.id_photo)" class="card-{{$index}}">
+                    <div class="card">
+                        <div class="item item-body">
+                            <div class="image">
+                                <img ng-src="{{photo.link}}">
+                            </div>
+                            <div class="">
+                                <p>{{photo.caption}}</p>
+                            </div>
+                        </div>
 
-    </div>
-  </ion-content>
+                    </div>
+
+                </td-card>
+            </td-cards>
+
+        </div>
+    </ion-content>
 </ion-view>

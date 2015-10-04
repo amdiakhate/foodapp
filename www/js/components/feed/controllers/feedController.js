@@ -2,13 +2,11 @@
  * Created by Makhtar on 29/09/2015.
  */
 
-angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'localStorageService', '$http', '$ionicLoading', '$q', function ($scope, Photos, localStorageService, $http, $ionicLoading, $q) {
+angular.module('foodstagramApp').controller('feedCtrl', ['API_URL','$scope', 'Photos', 'localStorageService', '$http', '$q', '$rootScope', function (API_URL,$scope, Photos, localStorageService, $http, $q, $rootScope) {
 
 
-    var url = "http://foodstagram.lifeswift.fr/api";
+    var url = API_URL;
     $scope.page = 1;
-    $scope.loading = false;
-    //$scope.photo = null;
 
     if (!localStorageService.get('photos')) {
         localStorageService.set('photos', []);
@@ -28,6 +26,8 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
                     $scope.id_user = response.data.id;
                     localStorageService.set('user', JSON.stringify(response));
                     deferred.resolve();
+                }, function (error) {
+                    console.log('error',error);
                 }
             )
         } else {
@@ -45,6 +45,7 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
         promise.then(function () {
             console.log('sucess', $scope.id_user);
             Photos.query({page: $scope.page, id_user: $scope.id_user}, function (data) {
+                $rootScope.$broadcast('loading:show');
                 //No photos at the beginning
                 $scope.photos = [];
                 if (data.length > 0) {
@@ -59,6 +60,7 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
                 } else {
                     $('.load-more').text('No more data');
                 }
+                $rootScope.$broadcast('loading:hide');
 
             })
         })
@@ -70,7 +72,6 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
      * This function loads the next photo
      */
     $scope.nextPhoto = function () {
-        $scope.loading = true;
         if (!localStorageService.get('photos')) {
             localStorageService.set('photos', []);
         }
@@ -82,7 +83,6 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
         } else {
             $scope.loadMore();
         }
-        $scope.loading = false;
     }
 
 
@@ -95,6 +95,11 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
         }).then(
             function (response) {
                 //$scope.nextPhoto();
+            }, function (error) {
+                //On upvoting error, we hide the loading so the UI doesn't get stuck
+                console.log('error upvote',error);
+                $rootScope.$broadcast('loading:hide')
+
             }
         )
 
@@ -109,6 +114,10 @@ angular.module('foodstagramApp').controller('feedCtrl', ['$scope', 'Photos', 'lo
         }).then(
             function (response) {
                 //$scope.nextPhoto();
+            },function(error) {
+                //On downvoting error, we hide the loading so the UI doesn't get stuck
+                console.log('error downvote',error);
+                $rootScope.$broadcast('loading:hide')
             }
         )
 
